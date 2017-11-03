@@ -8,11 +8,11 @@ export default {
   getRoutes: async () => [
     {
       path: '/',
-      component: 'src/containers/Home',
+      component: 'src/features/home/Home',
     },
     {
       is404: true,
-      component: 'src/containers/404',
+      component: 'src/features/notfound/404',
     },
   ],
   renderToHtml: (render, Comp, meta) => {
