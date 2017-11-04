@@ -1,10 +1,18 @@
-// import React from 'react'
+import React from 'react'
 import styled from 'styled-components'
+import sis from './sis.jpg'
 
 const EP = styled.div`
-  background: #ffffff;
-  height: 40rem;
-  width: 40rem;
+  background: url(${sis});
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  @media (max-height: 500px) {
+    background-position: center 0rem;
+  }
 `
-
-export default EP
+export default ({ ...rest }) => <EP {...rest} />

@@ -1,14 +1,18 @@
 import React from 'react'
 import { Router } from 'react-static'
 import { injectGlobal } from 'styled-components'
-//
 import Routes from 'react-static-routes'
 
 injectGlobal`
+
+  @font-face {
+      font-family: 'constan';
+      src: url(constan.ttf);
+  }
+
   body {
     background: #000000;
-    color: #ffffff;
-    font-family: 'Futura', 'Futura lt', Helvetica, Arial, sans-serif;
+    font-family: 'constan', 'Futura', 'Futura lt', Helvetica, Arial, sans-serif;
     font-weight: 300;
     font-size: 16px;
     margin: 0;

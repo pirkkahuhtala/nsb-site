@@ -7,10 +7,13 @@ import EP from './EP'
 import Title from './Title'
 import NSB from './NSB'
 
-const createFade = duration => {
+const createFade = (duration, style = {}) => {
   const defaultStyle = {
-    transition: `opacity ${duration}ms ease-in-out`,
-    opacity: 0,
+    ...{
+      transition: `opacity ${duration}ms ease-in-out`,
+      opacity: 0,
+    },
+    ...style,
   }
 
   const transitionStyles = {
@@ -33,39 +36,43 @@ const createFade = duration => {
   )
 }
 
-const Home = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-top: 5rem;
-`
+const Home = styled.div`display: flex;`
 
 const enhance = compose(
-  withState('isLoading', 'setLoading', true),
+  withState('backgroundVisible', 'setBackgroundVisible', false),
+  withState('titleVisible', 'setTitleVisible', false),
+  withState('nsbVisible', 'setNSBVisible', false),
   lifecycle({
     componentDidMount () {
-      this.props.setLoading(false)
+      const self = this
+      self.props.setBackgroundVisible(true)
+      setInterval(() => {
+        self.props.setTitleVisible(true)
+      }, 3000)
+      setInterval(() => {
+        self.props.setNSBVisible(true)
+      }, 2000)
     },
   }),
 )
 
-const EPfade = createFade(1000)
-const Titlefade = createFade(1800)
-const NSBfade = createFade(2300)
+const EPfade = createFade(1000, { flex: '0 0 100%' })
+const Titlefade = createFade(1000)
+const NSBfade = createFade(1000)
 
 export default getSiteProps(
-  enhance(({ isLoading }) => (
+  enhance(({ backgroundVisible, nsbVisible, titleVisible }) => (
     <Home>
-      <EPfade inProp={!isLoading}>
-        <EP />
+      <EPfade inProp={backgroundVisible}>
+        <EP>
+          <NSBfade inProp={nsbVisible}>
+            <NSB />
+          </NSBfade>
+          <Titlefade inProp={titleVisible}>
+            <Title />
+          </Titlefade>
+        </EP>
       </EPfade>
-      <Titlefade inProp={!isLoading}>
-        <Title />
-      </Titlefade>
-      <NSBfade inProp={!isLoading}>
-        <NSB />
-      </NSBfade>
     </Home>
   )),
 )
