@@ -6,17 +6,17 @@ const NSB = styled.div`
   font-size: 2rem;
   margin-top: 5rem;
   text-transform: uppercase;
-  @media (max-width: 768px) {
+  @media (max-width: 960px) {
     font-size: 1.5rem;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 600px)  {
     font-size: 1.2rem;
   }
-  @media (max-width: 370px) {
+  @media (max-width: 360px) {
     font-size: 1rem;
   }
-  @media (max-height: 500px) {
-    margin-top: 2rem;
+  @media (max-width: 1480px), (max-height: 500px) {
+    margin-top: 1.5rem;
   }
 `
 

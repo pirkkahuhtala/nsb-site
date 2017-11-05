@@ -6,6 +6,7 @@ import { compose, withState, lifecycle } from 'recompose'
 import EP from './EP'
 import Title from './Title'
 import NSB from './NSB'
+import Player from './player'
 
 const createFade = (duration, style = {}) => {
   const defaultStyle = {
@@ -42,35 +43,45 @@ const enhance = compose(
   withState('backgroundVisible', 'setBackgroundVisible', false),
   withState('titleVisible', 'setTitleVisible', false),
   withState('nsbVisible', 'setNSBVisible', false),
+  withState('playerVisible', 'setPlayerVisible', false),
+  withState('downloadVisible', 'setDownloadVisible', false),
   lifecycle({
     componentDidMount () {
       const self = this
       self.props.setBackgroundVisible(true)
       setInterval(() => {
+        self.props.setNSBVisible(true)
+      }, 2000)
+      setInterval(() => {
         self.props.setTitleVisible(true)
       }, 3000)
       setInterval(() => {
-        self.props.setNSBVisible(true)
-      }, 2000)
+        self.props.setPlayerVisible(true)
+      }, 4000)
+      setInterval(() => {
+        self.props.setDownloadVisible(true)
+      }, 5000)
     },
   }),
 )
 
 const EPfade = createFade(1000, { flex: '0 0 100%' })
-const Titlefade = createFade(1000)
-const NSBfade = createFade(1000)
+const Fade = createFade(1000)
 
 export default getSiteProps(
-  enhance(({ backgroundVisible, nsbVisible, titleVisible }) => (
+  enhance(({ backgroundVisible, nsbVisible, titleVisible, playerVisible }) => (
     <Home>
       <EPfade inProp={backgroundVisible}>
         <EP>
-          <NSBfade inProp={nsbVisible}>
+          <Fade inProp={nsbVisible}>
             <NSB />
-          </NSBfade>
-          <Titlefade inProp={titleVisible}>
+          </Fade>
+          <Fade inProp={titleVisible}>
             <Title />
-          </Titlefade>
+          </Fade>
+          <Fade inProp={playerVisible}>
+            <Player />
+          </Fade>
         </EP>
       </EPfade>
     </Home>
