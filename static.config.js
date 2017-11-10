@@ -2,8 +2,29 @@ import React, { Component } from 'react'
 import { ServerStyleSheet } from 'styled-components'
 
 export default {
+  webpack: [
+    (config, { defaultLoaders }) => {
+      config.module.rules = [
+        {
+          oneOf: [
+            defaultLoaders.jsLoader,
+            defaultLoaders.cssLoader,
+            {
+              test: /\.(ogg|mp3|wav|mpe?g)$/i,
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]',
+              },
+            },
+            defaultLoaders.fileLoader,
+          ],
+        },
+      ]
+      return config
+    },
+  ],
   getSiteProps: () => ({
-    title: 'React Static',
+    title: 'novembersoundsbetter - Solace in Solitude',
   }),
   getRoutes: async () => [
     {

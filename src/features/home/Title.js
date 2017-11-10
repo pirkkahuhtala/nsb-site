@@ -4,20 +4,23 @@ import styled from 'styled-components'
 const Title = styled.div`
   color: #000000;
   font-size: 4.5rem;
+  margin-bottom: 1rem;
   margin-top: 1rem;
   text-transform: uppercase;
-  @media (max-width: 768px) {
-    font-size: 3rem;
-    margin-top: 0.5rem;
+  @media (max-width: 960px) {
+    font-size: 2.5rem;
+    margin-bottom: 0.1rem;
+    margin-top: 0.1rem;
   }
-  @media (max-width: 500px)  {
+  @media (max-width: 600px) {
     font-size: 2.2em;
-    margin-top: 0.5rem;
   }
-  @media (max-width: 370px)  {
+  @media (max-width: 360px) {
     font-size: 1.5em;
   }
-
+  @media (max-height: 600px) {
+    margin-bottom: 0.1rem;
+  }
 `
 
 export default () => <Title>Solace in Solitude</Title>
