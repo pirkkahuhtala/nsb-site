@@ -4,9 +4,8 @@ import PropTypes from 'prop-types'
 import NowPlaying from './NowPlaying'
 import ControlsContainer from './ControlsContainer'
 import SongList from './SongList'
-import songs from '../songs'
 
-const Player = ({ nowPlaying, setNowPlaying, songEnded }) => (
+const Player = ({ nowPlaying, setNowPlaying, songs, songEnded }) => (
   <div>
     <NowPlaying song={nowPlaying.title} />
     <ControlsContainer file={nowPlaying.file} songEnded={songEnded} />
@@ -15,18 +14,19 @@ const Player = ({ nowPlaying, setNowPlaying, songEnded }) => (
 )
 
 Player.defaultProps = {
-  nowPlaying: {
-    name: undefined,
-    file: undefined,
-  },
+  nowPlaying: {},
+  songs: [],
 }
 
+const SongShape = PropTypes.shape({
+  id: PropTypes.number,
+  file: PropTypes.string,
+  title: PropTypes.string,
+})
+
 Player.propTypes = {
-  nowPlaying: PropTypes.shape({
-    id: PropTypes.number,
-    file: PropTypes.string,
-    title: PropTypes.string,
-  }),
+  nowPlaying: SongShape,
+  songs: PropTypes.arrayOf(SongShape),
 }
 
 const enchance = compose(
@@ -35,17 +35,18 @@ const enchance = compose(
       nowPlaying: undefined,
     },
     {
-      setNowPlaying: () => value => ({
-        nowPlaying: value,
+      setNowPlaying: () => song => ({
+        nowPlaying: song,
       }),
-      songEnded: prevState => () => {
-        let nowPlaying = prevState.nowPlaying
+      songEnded: (state, props) => () => {
+        const songs = props.songs
+        let nowPlaying = state.nowPlaying
         const i = songs.findIndex(song => song.id === nowPlaying.id) + 1
         if (i <= songs.length) {
           nowPlaying = songs[i]
         }
         return {
-          ...prevState,
+          ...state,
           nowPlaying,
         }
       },

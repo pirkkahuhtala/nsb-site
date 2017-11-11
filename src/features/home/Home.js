@@ -7,6 +7,7 @@ import Title from './Title'
 import NSB from './NSB'
 import Player from './player'
 import Animations from './Animations'
+import songs from './songs'
 
 const Home = styled.div`display: flex;`
 
@@ -65,7 +66,7 @@ export default getSiteProps(
             <Title />
           </Fade>
           <Fade inProp={playerVisible}>
-            <Player />
+            <Player songs={songs} />
           </Fade>
         </EP>
       </EPfade>
