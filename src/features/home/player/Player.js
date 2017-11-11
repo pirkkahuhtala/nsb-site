@@ -61,11 +61,16 @@ const enchance = compose(
       isSongLoading: false,
     },
     {
-      playSelected: () => song => ({
-        isSongLoading: true,
-        nowPlaying: song,
-        playerOperation: 'play',
-      }),
+      playSelected: state => song => {
+        if (state.nowPlaying === song) {
+          return state.nowPlaying
+        }
+        return {
+          isSongLoading: true,
+          nowPlaying: song,
+          playerOperation: 'play',
+        }
+      },
       onEnded: (state, props) => () => {
         const songs = props.songs
         let nowPlaying = state.nowPlaying
