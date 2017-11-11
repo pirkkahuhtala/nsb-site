@@ -1,7 +1,7 @@
 import React from 'react'
 import { getSiteProps } from 'react-static'
 import styled from 'styled-components'
-import { compose, withState, lifecycle } from 'recompose'
+import { compose, withStateHandlers, lifecycle } from 'recompose'
 import EP from './EP'
 import Title from './Title'
 import NSB from './NSB'
@@ -11,11 +11,28 @@ import Animations from './Animations'
 const Home = styled.div`display: flex;`
 
 const enhance = compose(
-  withState('backgroundVisible', 'setBackgroundVisible', false),
-  withState('titleVisible', 'setTitleVisible', false),
-  withState('nsbVisible', 'setNSBVisible', false),
-  withState('playerVisible', 'setPlayerVisible', false),
-  withState('downloadVisible', 'setDownloadVisible', false),
+  withStateHandlers(
+    {
+      backgroundVisible: false,
+      titleVisible: false,
+      nsbVisible: false,
+      playerVisible: false,
+    },
+    {
+      setBackgroundVisible: () => value => ({
+        backgroundVisible: value,
+      }),
+      setTitleVisible: () => value => ({
+        titleVisible: value,
+      }),
+      setNSBVisible: () => value => ({
+        nsbVisible: value,
+      }),
+      setPlayerVisible: () => value => ({
+        playerVisible: value,
+      }),
+    },
+  ),
   lifecycle({
     componentDidMount () {
       const self = this
