@@ -62,7 +62,7 @@ const enchance = compose(
     },
     {
       playSelected: state => song => {
-        if (state.nowPlaying === song) {
+        if (state.nowPlaying === song && state.playerOperation === 'play') {
           return state.nowPlaying
         }
         return {
