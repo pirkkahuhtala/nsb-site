@@ -7,6 +7,7 @@ import EP from './EP'
 import Title from './Title'
 import NSB from './NSB'
 import Player from './player'
+import songs from './songs'
 
 const createFade = (duration, style = {}) => {
   const defaultStyle = {
@@ -80,7 +81,7 @@ export default getSiteProps(
             <Title />
           </Fade>
           <Fade inProp={playerVisible}>
-            <Player />
+            <Player song={songs[4]} />
           </Fade>
         </EP>
       </EPfade>
