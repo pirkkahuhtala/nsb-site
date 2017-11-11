@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import NowPlaying from './NowPlaying'
 import ControlsContainer from './ControlsContainer'
 import SongList from './SongList'
+import Song from './types'
 
 const Player = ({ nowPlaying, setNowPlaying, songs, songEnded }) => (
   <div>
@@ -18,15 +19,9 @@ Player.defaultProps = {
   songs: [],
 }
 
-const SongShape = PropTypes.shape({
-  id: PropTypes.number,
-  file: PropTypes.string,
-  title: PropTypes.string,
-})
-
 Player.propTypes = {
-  nowPlaying: SongShape,
-  songs: PropTypes.arrayOf(SongShape),
+  nowPlaying: Song,
+  songs: PropTypes.arrayOf(Song),
 }
 
 const enchance = compose(
