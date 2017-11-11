@@ -26,7 +26,7 @@ const Player = ({
       play={play}
       pause={pause}
     />}
-    <SongList songs={songs} selectSong={playSelected} />
+    <SongList nowPlaying={nowPlaying} songs={songs} selectSong={playSelected} />
     <Audio
       operation={playerOperation}
       onEnded={onEnded}
@@ -77,6 +77,8 @@ const enchance = compose(
         const i = songs.findIndex(song => song.id === nowPlaying.id) + 1
         if (i <= songs.length) {
           nowPlaying = songs[i]
+        } else {
+          nowPlaying = {}
         }
         return {
           ...state,

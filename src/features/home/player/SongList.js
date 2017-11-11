@@ -10,13 +10,14 @@ const StyledDiv = styled.div`
   text-align: center;
 `
 
-const SongList = ({ selectSong, songs }) => (
+const SongList = ({ nowPlaying, selectSong, songs }) => (
   <StyledDiv>
     {songs.map((song, i) => (
       <SongItem
         key={song.id}
         onClick={selectSong}
         number={i + 1}
+        selected={nowPlaying.id === song.id}
         song={song}
       />
     ))}
@@ -24,11 +25,13 @@ const SongList = ({ selectSong, songs }) => (
 )
 
 SongList.defaultProps = {
+  nowPlaying: {},
   selectSong: () => {},
   songs: [],
 }
 
 SongList.propTypes = {
+  nowPlaying: Song,
   selectSong: PropTypes.func,
   songs: PropTypes.arrayOf(Song),
 }
