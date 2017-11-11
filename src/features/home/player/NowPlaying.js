@@ -1,7 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-const NowPlaying = styled.span`
+const NowPlayingText = styled.span`
   font-size: 1rem;
   text-transform: uppercase;
   @media (max-width: 960px) {
@@ -29,10 +30,20 @@ const Song = styled.div`
 
 const StyledDiv = styled.div`text-align: center;`
 
-export default ({ song }) => (
+const NowPlaying = ({ title }) => (
   <StyledDiv>
-    {song && <NowPlaying>Now playing</NowPlaying>}
-    {song && <br />}
-    {song && <Song>{song}</Song>}
+    {title && <NowPlayingText>Now playing</NowPlayingText>}
+    {title && <br />}
+    {title && <Song>{title}</Song>}
   </StyledDiv>
 )
+
+NowPlaying.defaultProps = {
+  title: undefined,
+}
+
+NowPlaying.propTypes = {
+  title: PropTypes.string,
+}
+
+export default NowPlaying

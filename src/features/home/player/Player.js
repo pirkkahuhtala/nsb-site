@@ -7,7 +7,7 @@ import SongList from './SongList'
 
 const Player = ({ nowPlaying, setNowPlaying, songs, songEnded }) => (
   <div>
-    <NowPlaying song={nowPlaying.title} />
+    <NowPlaying title={nowPlaying.title} />
     <ControlsContainer file={nowPlaying.file} songEnded={songEnded} />
     <SongList songs={songs} selectSong={setNowPlaying} />
   </div>
