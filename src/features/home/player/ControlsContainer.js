@@ -1,65 +1,61 @@
 import React, { Component } from 'react'
+import AudioSrc from './Audio'
 import Controls from './Controls'
-
-let loading = true
 
 class ControlsContainer extends Component {
   constructor (props) {
     super(props)
-    this.state = { playing: false }
+    this.state = { operation: 'stop', playing: false }
   }
 
   componentDidUpdate (prevProps) {
-    if ((this.props.file && this.props.file !== prevProps.file)) {
+    if (this.props.file && this.props.file !== prevProps.file) {
       this.play()
     }
   }
 
   onEnded = () => {
     this.setState({
-      playing: false,
-      loading,
+      ...this.state,
+      operation: undefined,
     })
     this.props.songEnded()
   };
 
   onPlaying = () => {
-    loading = false
     this.setState({
-      playing: true,
-      loading,
+      ...this.state,
+      loading: false,
     })
-    this.audio.play()
   };
 
   play = () => {
     this.setState({
-      loading,
+      ...this.state,
+      operation: 'play',
+      loading: true,
     })
-    this.audio.play()
   };
 
   pause = () => {
     this.setState({
-      playing: false,
+      ...this.state,
+      operation: 'pause',
     })
-    this.audio.pause()
   };
 
   render () {
     return (
       <div>
-        <audio
+        <AudioSrc
+          operation={this.state.operation}
           onEnded={this.onEnded}
           onPlaying={this.onPlaying}
-          ref={c => {
-            this.audio = c
-          }}
-          src={this.props.file}
+          file={this.props.file}
         />
         {this.props.file && (
           <Controls
-            playing={this.state.playing}
+            playing={!this.state.loading && this.state.operation === 'play'}
             loading={this.state.loading}
             play={this.play}
             pause={this.pause}
