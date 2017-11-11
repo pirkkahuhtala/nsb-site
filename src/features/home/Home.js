@@ -1,41 +1,12 @@
 import React from 'react'
 import { getSiteProps } from 'react-static'
 import styled from 'styled-components'
-import Transition from 'react-transition-group/Transition'
 import { compose, withState, lifecycle } from 'recompose'
 import EP from './EP'
 import Title from './Title'
 import NSB from './NSB'
 import Player from './player'
-
-const createFade = (duration, style = {}) => {
-  const defaultStyle = {
-    ...{
-      transition: `opacity ${duration}ms ease-in-out`,
-      opacity: 0,
-    },
-    ...style,
-  }
-
-  const transitionStyles = {
-    entering: { opacity: 0 },
-    entered: { opacity: 1 },
-  }
-  return ({ inProp, children }) => (
-    <Transition in={inProp} timeout={duration}>
-      {state => (
-        <div
-          style={{
-            ...defaultStyle,
-            ...transitionStyles[state],
-          }}
-        >
-          {children}
-        </div>
-      )}
-    </Transition>
-  )
-}
+import Animations from './Animations'
 
 const Home = styled.div`display: flex;`
 
@@ -65,8 +36,8 @@ const enhance = compose(
   }),
 )
 
-const EPfade = createFade(1000, { flex: '0 0 100%' })
-const Fade = createFade(1000, { width: '100%' })
+const EPfade = Animations.createFade(1000, { flex: '0 0 100%' })
+const Fade = Animations.createFade(1000, { width: '100%' })
 
 export default getSiteProps(
   enhance(({ backgroundVisible, nsbVisible, titleVisible, playerVisible }) => (
