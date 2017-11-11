@@ -83,11 +83,11 @@ const enchance = compose(
         const songs = props.songs
         let nowPlaying = state.nowPlaying
         const i = songs.findIndex(song => song.id === nowPlaying.id) + 1
-        let playerOperation = true
+        let playerOperation = 'play'
         if (i <= songs.length) {
           nowPlaying = songs[i]
         } else {
-          playerOperation = false
+          playerOperation = 'pause'
           nowPlaying = {}
         }
         return {
