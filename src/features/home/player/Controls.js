@@ -38,7 +38,7 @@ const StyledLoader = styled(Loader)`
   ${controlStyle}
 `
 
-const StyledDiv = styled.div`
+const Controls = styled.div`
   margin-top: 0.1rem;
   text-align: center;
 `
@@ -54,7 +54,7 @@ const Control = ({ playing, loading, play, pause }) => {
 }
 
 export default props => (
-  <StyledDiv>
+  <Controls>
     <Control {...props} />
-  </StyledDiv>
+  </Controls>
 )

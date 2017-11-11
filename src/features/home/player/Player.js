@@ -23,15 +23,15 @@ const Player = ({
   songs,
 }) => (
   <div>
-    <Fade inProp={nowPlaying.id}>
+    <Fade inProp={!!nowPlaying.id}>
       <FadeOut inProp={!nowPlaying.id}>
         <NowPlaying title={nowPlaying.title} />
-        <Controls
+        {nowPlaying.id && <Controls
           playing={!isSongLoading && playerOperation === 'play'}
           loading={isSongLoading}
           play={play}
           pause={pause}
-        />
+        />}
       </FadeOut>
     </Fade>
     <SongList nowPlaying={nowPlaying} songs={songs} selectSong={playSelected} />
