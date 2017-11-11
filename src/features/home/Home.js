@@ -46,9 +46,6 @@ const enhance = compose(
       setTimeout(() => {
         self.props.setPlayerVisible(true)
       }, 4000)
-      setTimeout(() => {
-        self.props.setDownloadVisible(true)
-      }, 5000)
     },
   }),
 )
