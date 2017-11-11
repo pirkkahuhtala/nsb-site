@@ -8,14 +8,14 @@ import Controls from './Controls'
 import Audio from './Audio'
 
 const Player = ({
-  nowPlaying,
   isSongLoading,
+  nowPlaying,
   onEnded,
   onPlaying,
+  pause,
   play,
   playerOperation,
   playSelected,
-  pause,
   songs,
 }) => (
   <div>
@@ -42,7 +42,14 @@ Player.defaultProps = {
 }
 
 Player.propTypes = {
-  nowPlaying: Song,
+  isSongLoading: PropTypes.bool.isRequired,
+  nowPlaying: Song.isRequired,
+  onEnded: PropTypes.func.isRequired,
+  onPlaying: PropTypes.func.isRequired,
+  pause: PropTypes.func.isRequired,
+  play: PropTypes.func.isRequired,
+  playerOperation: PropTypes.string.isRequired,
+  playSelected: PropTypes.func.isRequired,
   songs: PropTypes.arrayOf(Song),
 }
 
