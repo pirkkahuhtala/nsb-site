@@ -20,6 +20,7 @@ class ControlsContainer extends Component {
       playing: false,
       loading,
     })
+    this.props.songEnded()
   };
 
   onPlaying = () => {
