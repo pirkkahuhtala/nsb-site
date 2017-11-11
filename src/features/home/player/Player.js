@@ -2,15 +2,37 @@ import React from 'react'
 import { compose, withStateHandlers } from 'recompose'
 import PropTypes from 'prop-types'
 import NowPlaying from './NowPlaying'
-import ControlsContainer from './ControlsContainer'
 import SongList from './SongList'
 import Song from './types'
+import Controls from './Controls'
+import Audio from './Audio'
 
-const Player = ({ nowPlaying, setNowPlaying, songs, songEnded }) => (
+const Player = ({
+  nowPlaying,
+  isSongLoading,
+  onEnded,
+  onPlaying,
+  play,
+  playerOperation,
+  playSelected,
+  pause,
+  songs,
+}) => (
   <div>
     <NowPlaying title={nowPlaying.title} />
-    <ControlsContainer file={nowPlaying.file} songEnded={songEnded} />
-    <SongList songs={songs} selectSong={setNowPlaying} />
+    {nowPlaying.id && <Controls
+      playing={!isSongLoading && playerOperation === 'play'}
+      loading={isSongLoading}
+      play={play}
+      pause={pause}
+    />}
+    <SongList songs={songs} selectSong={playSelected} />
+    <Audio
+      operation={playerOperation}
+      onEnded={onEnded}
+      onPlaying={onPlaying}
+      file={nowPlaying.file}
+    />
   </div>
 )
 
@@ -28,12 +50,16 @@ const enchance = compose(
   withStateHandlers(
     {
       nowPlaying: undefined,
+      playerOperation: 'pause',
+      isSongLoading: false,
     },
     {
-      setNowPlaying: () => song => ({
+      playSelected: () => song => ({
+        isSongLoading: true,
         nowPlaying: song,
+        playerOperation: 'play',
       }),
-      songEnded: (state, props) => () => {
+      onEnded: (state, props) => () => {
         const songs = props.songs
         let nowPlaying = state.nowPlaying
         const i = songs.findIndex(song => song.id === nowPlaying.id) + 1
@@ -45,6 +71,15 @@ const enchance = compose(
           nowPlaying,
         }
       },
+      play: () => () => ({
+        playerOperation: 'play',
+      }),
+      pause: () => () => ({
+        playerOperation: 'pause',
+      }),
+      onPlaying: () => () => ({
+        isSongLoading: false,
+      }),
     },
   ),
 )

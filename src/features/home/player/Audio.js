@@ -2,15 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 class Audio extends Component {
-  componentWillReceiveProps ({ operation }) {
-    if (this.props.operation !== operation) {
-      switch (operation) {
-        case 'play':
-          this.audio.play()
-          break
-        default:
-          this.audio.pause()
-      }
+  componentDidUpdate () {
+    switch (this.props.operation) {
+      case 'play':
+        this.audio.play()
+        break
+      default:
+        this.audio.pause()
     }
   }
 
