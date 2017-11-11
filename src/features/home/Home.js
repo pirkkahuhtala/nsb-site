@@ -7,7 +7,6 @@ import EP from './EP'
 import Title from './Title'
 import NSB from './NSB'
 import Player from './player'
-import songs from './songs'
 
 const createFade = (duration, style = {}) => {
   const defaultStyle = {
@@ -50,16 +49,16 @@ const enhance = compose(
     componentDidMount () {
       const self = this
       self.props.setBackgroundVisible(true)
-      setInterval(() => {
+      setTimeout(() => {
         self.props.setNSBVisible(true)
       }, 2000)
-      setInterval(() => {
+      setTimeout(() => {
         self.props.setTitleVisible(true)
       }, 3000)
-      setInterval(() => {
+      setTimeout(() => {
         self.props.setPlayerVisible(true)
       }, 4000)
-      setInterval(() => {
+      setTimeout(() => {
         self.props.setDownloadVisible(true)
       }, 5000)
     },
@@ -82,7 +81,7 @@ export default getSiteProps(
             <Title />
           </Fade>
           <Fade inProp={playerVisible}>
-            <Player songs={songs} />
+            <Player />
           </Fade>
         </EP>
       </EPfade>
