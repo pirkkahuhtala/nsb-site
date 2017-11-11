@@ -6,6 +6,10 @@ import SongList from './SongList'
 import Song from './types'
 import Controls from './Controls'
 import Audio from './Audio'
+import Animations from '../Animations'
+
+const Fade = Animations.createFade(500)
+const FadeOut = Animations.createFadeOut(500)
 
 const Player = ({
   isSongLoading,
@@ -19,13 +23,17 @@ const Player = ({
   songs,
 }) => (
   <div>
-    <NowPlaying title={nowPlaying.title} />
-    {nowPlaying.id && <Controls
-      playing={!isSongLoading && playerOperation === 'play'}
-      loading={isSongLoading}
-      play={play}
-      pause={pause}
-    />}
+    <Fade inProp={nowPlaying.id}>
+      <FadeOut inProp={!nowPlaying.id}>
+        <NowPlaying title={nowPlaying.title} />
+        <Controls
+          playing={!isSongLoading && playerOperation === 'play'}
+          loading={isSongLoading}
+          play={play}
+          pause={pause}
+        />
+      </FadeOut>
+    </Fade>
     <SongList nowPlaying={nowPlaying} songs={songs} selectSong={playSelected} />
     <Audio
       operation={playerOperation}
@@ -75,13 +83,15 @@ const enchance = compose(
         const songs = props.songs
         let nowPlaying = state.nowPlaying
         const i = songs.findIndex(song => song.id === nowPlaying.id) + 1
+        let playerOperation = true
         if (i <= songs.length) {
           nowPlaying = songs[i]
         } else {
+          playerOperation = false
           nowPlaying = {}
         }
         return {
-          ...state,
+          playerOperation,
           nowPlaying,
         }
       },
