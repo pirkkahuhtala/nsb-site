@@ -11,42 +11,42 @@ const songs = [
   {
     id: 1,
     file: formAndVoid,
-    name: 'Form and Void',
+    title: 'Form and Void',
   },
   {
     id: 2,
     file: living,
-    name: 'Living on the Edge of Forever',
+    title: 'Living on the Edge of Forever',
   },
   {
     id: 3,
     file: anEnemyOfFate,
-    name: 'An Enemy of Fate',
+    title: 'An Enemy of Fate',
   },
   {
     id: 4,
     file: thingsLeftBehind,
-    name: 'Things Left Behind',
+    title: 'Things Left Behind',
   },
   {
     id: 5,
     file: weNeverStoodAChange,
-    name: 'We Never Stood a Chance',
+    title: 'We Never Stood a Chance',
   },
   {
     id: 6,
     file: whatLiesBeneath,
-    name: 'What Lies Beneath',
+    title: 'What Lies Beneath',
   },
   {
     id: 7,
     file: aDayWillComeWhenYouWontBe,
-    name: 'A Day Will Come When You Won\'t Be',
+    title: 'A Day Will Come When You Won\'t Be',
   },
   {
     id: 8,
     file: aLastOfHerKind,
-    name: 'The Last of Her Kind',
+    title: 'The Last of Her Kind',
   },
 ]
 

@@ -67,13 +67,14 @@ const enhance = compose(
 )
 
 const EPfade = createFade(1000, { flex: '0 0 100%' })
-const Fade = createFade(1000)
+const Fade = createFade(1000, { width: '100%' })
 
 export default getSiteProps(
   enhance(({ backgroundVisible, nsbVisible, titleVisible, playerVisible }) => (
     <Home>
       <EPfade inProp={backgroundVisible}>
         <EP>
+
           <Fade inProp={nsbVisible}>
             <NSB />
           </Fade>
@@ -81,7 +82,7 @@ export default getSiteProps(
             <Title />
           </Fade>
           <Fade inProp={playerVisible}>
-            <Player song={songs[4]} />
+            <Player songs={songs} />
           </Fade>
         </EP>
       </EPfade>

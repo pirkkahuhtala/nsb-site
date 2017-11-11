@@ -9,12 +9,18 @@ class ControlsContainer extends Component {
     this.state = { playing: false }
   }
 
+  componentDidUpdate (prevProps) {
+    if ((this.props.file && this.props.file !== prevProps.file)) {
+      this.play()
+    }
+  }
+
   onEnded = () => {
     this.setState({
       playing: false,
       loading,
     })
-  }
+  };
 
   onPlaying = () => {
     loading = false
@@ -23,21 +29,21 @@ class ControlsContainer extends Component {
       loading,
     })
     this.audio.play()
-  }
+  };
 
   play = () => {
     this.setState({
       loading,
     })
     this.audio.play()
-  }
+  };
 
   pause = () => {
     this.setState({
       playing: false,
     })
     this.audio.pause()
-  }
+  };
 
   render () {
     return (
@@ -50,12 +56,14 @@ class ControlsContainer extends Component {
           }}
           src={this.props.file}
         />
-        <Controls
-          playing={this.state.playing}
-          loading={this.state.loading}
-          play={this.play}
-          pause={this.pause}
-        />
+        {this.props.file && (
+          <Controls
+            playing={this.state.playing}
+            loading={this.state.loading}
+            play={this.play}
+            pause={this.pause}
+          />
+        )}
       </div>
     )
   }
