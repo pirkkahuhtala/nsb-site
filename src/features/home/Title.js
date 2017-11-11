@@ -6,6 +6,7 @@ const Title = styled.div`
   font-size: 4.5rem;
   margin-bottom: 1rem;
   margin-top: 1rem;
+  text-align: center;
   text-transform: uppercase;
   @media (max-width: 960px) {
     font-size: 2.5rem;

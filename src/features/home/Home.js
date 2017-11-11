@@ -49,16 +49,16 @@ const enhance = compose(
     componentDidMount () {
       const self = this
       self.props.setBackgroundVisible(true)
-      setInterval(() => {
+      setTimeout(() => {
         self.props.setNSBVisible(true)
       }, 2000)
-      setInterval(() => {
+      setTimeout(() => {
         self.props.setTitleVisible(true)
       }, 3000)
-      setInterval(() => {
+      setTimeout(() => {
         self.props.setPlayerVisible(true)
       }, 4000)
-      setInterval(() => {
+      setTimeout(() => {
         self.props.setDownloadVisible(true)
       }, 5000)
     },
@@ -66,13 +66,14 @@ const enhance = compose(
 )
 
 const EPfade = createFade(1000, { flex: '0 0 100%' })
-const Fade = createFade(1000)
+const Fade = createFade(1000, { width: '100%' })
 
 export default getSiteProps(
   enhance(({ backgroundVisible, nsbVisible, titleVisible, playerVisible }) => (
     <Home>
       <EPfade inProp={backgroundVisible}>
         <EP>
+
           <Fade inProp={nsbVisible}>
             <NSB />
           </Fade>

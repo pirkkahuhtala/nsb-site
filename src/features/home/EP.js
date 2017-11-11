@@ -10,7 +10,6 @@ const EP = styled.div`
   background-size: cover;
   display: flex;
   flex-direction: column;
-  align-items: center;
   height: 100vh;
   @media (max-height: 360px) {
     background-position: center 3rem;

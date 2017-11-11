@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Controls from './Controls'
-import weNeverStoodAChange from './novembersoundsbetter_-_Solace_in_Solitude_-_05_-_We_Never_Stood_a_Chance.mp3'
 
 let loading = true
 
@@ -10,12 +9,19 @@ class ControlsContainer extends Component {
     this.state = { playing: false }
   }
 
+  componentDidUpdate (prevProps) {
+    if ((this.props.file && this.props.file !== prevProps.file)) {
+      this.play()
+    }
+  }
+
   onEnded = () => {
     this.setState({
       playing: false,
       loading,
     })
-  }
+    this.props.songEnded()
+  };
 
   onPlaying = () => {
     loading = false
@@ -24,21 +30,21 @@ class ControlsContainer extends Component {
       loading,
     })
     this.audio.play()
-  }
+  };
 
   play = () => {
     this.setState({
       loading,
     })
     this.audio.play()
-  }
+  };
 
   pause = () => {
     this.setState({
       playing: false,
     })
     this.audio.pause()
-  }
+  };
 
   render () {
     return (
@@ -49,14 +55,16 @@ class ControlsContainer extends Component {
           ref={c => {
             this.audio = c
           }}
-          src={weNeverStoodAChange}
+          src={this.props.file}
         />
-        <Controls
-          playing={this.state.playing}
-          loading={this.state.loading}
-          play={this.play}
-          pause={this.pause}
-        />
+        {this.props.file && (
+          <Controls
+            playing={this.state.playing}
+            loading={this.state.loading}
+            play={this.play}
+            pause={this.pause}
+          />
+        )}
       </div>
     )
   }

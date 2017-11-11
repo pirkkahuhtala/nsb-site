@@ -5,6 +5,7 @@ const NSB = styled.div`
   color: #000000;
   font-size: 2rem;
   margin-top: 5rem;
+  text-align: center;
   text-transform: uppercase;
   @media (max-width: 960px) {
     font-size: 1.5rem;
