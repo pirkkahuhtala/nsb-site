@@ -29,7 +29,7 @@ export default {
   getRoutes: async () => [
     {
       path: '/',
-      component: 'src/features/home/Home',
+      component: 'src/features/home',
     },
     {
       is404: true,

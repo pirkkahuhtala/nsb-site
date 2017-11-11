@@ -73,7 +73,6 @@ export default getSiteProps(
     <Home>
       <EPfade inProp={backgroundVisible}>
         <EP>
-
           <Fade inProp={nsbVisible}>
             <NSB />
           </Fade>
