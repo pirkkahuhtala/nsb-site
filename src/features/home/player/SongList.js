@@ -1,27 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { withHandlers } from 'recompose'
-
-const SongItem = styled.div`
-  color: #ffffff;
-  cursor: pointer;
-  background: #000000;
-  padding: 1rem;
-  margin: 0.5rem;
-  opacity: 0.8;
-  text-transform: uppercase;
-`
-
-const SongItemContainer = withHandlers({
-  onClick: props => event => {
-    event.preventDefault()
-    props.selectSong(props.song)
-  },
-})(({ number, song, onClick }) => (
-  <SongItem onClick={onClick} key={song.id}>
-    {number}. {song.title}
-  </SongItem>
-))
+import SongItem from './SongItem'
+import Song from './types'
 
 const StyledDiv = styled.div`
   margin: 0 auto;
@@ -29,17 +10,30 @@ const StyledDiv = styled.div`
   text-align: center;
 `
 
-const SongList = ({ selectSong, songs }) => (
+const SongList = ({ nowPlaying, selectSong, songs }) => (
   <StyledDiv>
     {songs.map((song, i) => (
-      <SongItemContainer
+      <SongItem
         key={song.id}
-        selectSong={selectSong}
+        onClick={selectSong}
         number={i + 1}
+        selected={nowPlaying.id === song.id}
         song={song}
       />
     ))}
   </StyledDiv>
 )
+
+SongList.defaultProps = {
+  nowPlaying: {},
+  selectSong: () => {},
+  songs: [],
+}
+
+SongList.propTypes = {
+  nowPlaying: Song,
+  selectSong: PropTypes.func,
+  songs: PropTypes.arrayOf(Song),
+}
 
 export default SongList

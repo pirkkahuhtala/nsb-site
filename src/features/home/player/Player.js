@@ -2,53 +2,108 @@ import React from 'react'
 import { compose, withStateHandlers } from 'recompose'
 import PropTypes from 'prop-types'
 import NowPlaying from './NowPlaying'
-import ControlsContainer from './ControlsContainer'
 import SongList from './SongList'
-import songs from '../songs'
+import Song from './types'
+import Controls from './Controls'
+import Audio from './Audio'
+import Animations from '../Animations'
 
-const Player = ({ nowPlaying, setNowPlaying, songEnded }) => (
+const Fade = Animations.createFade(500)
+const FadeOut = Animations.createFadeOut(500)
+
+const Player = ({
+  isSongLoading,
+  nowPlaying,
+  onEnded,
+  onPlaying,
+  pause,
+  play,
+  playerOperation,
+  playSelected,
+  songs,
+}) => (
   <div>
-    <NowPlaying song={nowPlaying.title} />
-    <ControlsContainer file={nowPlaying.file} songEnded={songEnded} />
-    <SongList songs={songs} selectSong={setNowPlaying} />
+    <Fade inProp={!!nowPlaying.id}>
+      <FadeOut inProp={!nowPlaying.id}>
+        <NowPlaying title={nowPlaying.title} />
+        {nowPlaying.id && <Controls
+          playing={!isSongLoading && playerOperation === 'play'}
+          loading={isSongLoading}
+          play={play}
+          pause={pause}
+        />}
+      </FadeOut>
+    </Fade>
+    <SongList nowPlaying={nowPlaying} songs={songs} selectSong={playSelected} />
+    <Audio
+      operation={playerOperation}
+      onEnded={onEnded}
+      onPlaying={onPlaying}
+      file={nowPlaying.file}
+    />
   </div>
 )
 
 Player.defaultProps = {
-  nowPlaying: {
-    name: undefined,
-    file: undefined,
-  },
+  nowPlaying: {},
+  songs: [],
 }
 
 Player.propTypes = {
-  nowPlaying: PropTypes.shape({
-    id: PropTypes.number,
-    file: PropTypes.string,
-    title: PropTypes.string,
-  }),
+  isSongLoading: PropTypes.bool.isRequired,
+  nowPlaying: Song.isRequired,
+  onEnded: PropTypes.func.isRequired,
+  onPlaying: PropTypes.func.isRequired,
+  pause: PropTypes.func.isRequired,
+  play: PropTypes.func.isRequired,
+  playerOperation: PropTypes.string.isRequired,
+  playSelected: PropTypes.func.isRequired,
+  songs: PropTypes.arrayOf(Song),
 }
 
 const enchance = compose(
   withStateHandlers(
     {
       nowPlaying: undefined,
+      playerOperation: 'pause',
+      isSongLoading: false,
     },
     {
-      setNowPlaying: () => value => ({
-        nowPlaying: value,
-      }),
-      songEnded: prevState => () => {
-        let nowPlaying = prevState.nowPlaying
-        const i = songs.findIndex(song => song.id === nowPlaying.id) + 1
-        if (i <= songs.length) {
-          nowPlaying = songs[i]
+      playSelected: state => song => {
+        if (state.nowPlaying === song && state.playerOperation === 'play') {
+          return state.nowPlaying
         }
         return {
-          ...prevState,
+          isSongLoading: true,
+          nowPlaying: song,
+          playerOperation: 'play',
+        }
+      },
+      onEnded: (state, props) => () => {
+        const songs = props.songs
+        let nowPlaying = state.nowPlaying
+        const i = songs.findIndex(song => song.id === nowPlaying.id) + 1
+        let playerOperation = 'play'
+        if (i <= songs.length) {
+          nowPlaying = songs[i]
+        } else {
+          playerOperation = 'pause'
+          nowPlaying = {}
+        }
+        return {
+          playerOperation,
           nowPlaying,
         }
       },
+      play: () => () => ({
+        playerOperation: 'play',
+      }),
+      pause: () => () => ({
+        playerOperation: 'pause',
+      }),
+      onPlaying: () => () => ({
+        isSongLoading: false,
+      }),
     },
   ),
 )

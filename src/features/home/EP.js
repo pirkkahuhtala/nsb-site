@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import sis from './sis.jpg'
 
 const EP = styled.div`
+  background-attachment: fixed;
   background-color: #ffffff;
   background-image: url(${sis});
   background-repeat: no-repeat;
@@ -11,6 +12,7 @@ const EP = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: scroll;
   @media (max-height: 360px) {
     background-position: center 3rem;
   }
